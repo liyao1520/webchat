@@ -33,6 +33,7 @@
             >
           </div>
         </form>
+        <h1 class="title">修改基本信息</h1>
       </el-tab-pane>
       <el-tab-pane label="账号" name="third">角色管理</el-tab-pane>
     </el-tabs>
