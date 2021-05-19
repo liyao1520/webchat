@@ -1,23 +1,45 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch((err) => err);
+};
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    redirect: "/home",
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    path: "/home",
+    component: () => import("views/home/Home.vue"),
+    children: [
+      {
+        path: "talk/:friendId",
+        component: () => import("views/talk/Talk.vue"),
+      },
+      {
+        path: "addfriend",
+        component: () => import("views/addFriend/AddFriend.vue"),
+      },
+      {
+        path: "setting",
+        component: () => import("views/setting/Setting.vue"),
+      },
+    ],
+  },
+  {
+    path: "/login",
+    component: () => import("views/auth/Login.vue"),
+  },
+  {
+    path: "/register",
+    component: () => import("views/auth/Register.vue"),
+  },
+  {
+    path: "/socket",
+    component: () => import("views/socket/Socket.vue"),
   },
 ];
 
