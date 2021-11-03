@@ -2,34 +2,20 @@
   <div class="addfriend">
     <div class="title"><i class="iconfont">&#xe66c;</i>添加好友</div>
     <div class="search">
-      <el-select
-        v-model="selectValue"
-        placeholder="请选择"
-        style="width: 100px"
-      >
+      <el-select v-model="selectValue" placeholder="请选择" style="width: 100px">
         <el-option label="id号" value="id" />
         <el-option label="昵称" value="name" />
       </el-select>
-      <el-input
-        style="width: 300px; margin-right: 20px"
-        v-model="inputValue"
-      /><el-button @click="searchClick">搜索</el-button>
+      <el-input style="width: 300px; margin-right: 20px" v-model="inputValue" /><el-button @click="searchClick"
+        >搜索</el-button
+      >
     </div>
     <el-scrollbar class="scrollbar" stripe>
-      <el-table
-        style="width: 100%"
-        :data="userInfoList"
-        v-if="userInfoList != null"
-      >
+      <el-table style="width: 100%" :data="userInfoList" v-if="userInfoList != null">
         <el-table-column label="id" prop="id" />
         <el-table-column label="头像">
           <template v-slot:default="scope">
-            <img
-              :src="scope.row.avatarUrl"
-              class="avatar"
-              alt=""
-              v-if="scope.row.avatarUrl"
-            />
+            <img :src="scope.row.avatarUrl" class="avatar" alt="" v-if="scope.row.avatarUrl" />
             <i class="iconfont avatar-icon" v-else>&#xe601;</i>
           </template>
         </el-table-column>
@@ -37,11 +23,7 @@
         <el-table-column label="性别" prop="sex" />
         <el-table-column label="添加">
           <template v-slot:default="scope">
-            <i
-              class="iconfont add-friend-icon"
-              @click="addFriendClick(scope.row.id)"
-              >&#xe66c;</i
-            >
+            <i class="iconfont add-friend-icon" @click="addFriendClick(scope.row.id)">&#xe66c;</i>
           </template>
         </el-table-column>
       </el-table>
@@ -82,7 +64,7 @@ export default {
           this.$message.success("添加好友成功!");
           getfirendsList()
             .then((res) => {
-              this.$$parent.friendsList = res.data;
+              this.$parent.friendsList = res.data;
             })
             .catch((err) => {
               console.log(err);

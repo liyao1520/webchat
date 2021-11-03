@@ -1,6 +1,8 @@
 <template>
   <div class="content" v-if="userInfo">
-    <div class="logo"><img src="~assets/logo.png" alt="" />WebChat</div>
+    <div class="logo" @click="goHome">
+      <img src="~assets/logo.png" alt="" />WebChat
+    </div>
     <div class="user-info">
       <div class="avatar">
         <img :src="userInfo.avatarUrl" alt="" v-if="userInfo.avatarUrl" />
@@ -26,6 +28,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import UserList from "@/components/UserList.vue";
 export default {
   components: {
@@ -36,8 +39,11 @@ export default {
       isInline: true,
     };
   },
-  props: ["userInfo", "friendsList"],
+  props: ["friendsList"],
   computed: {
+    ...mapState({
+      userInfo: "user",
+    }),
     currentTalkList() {
       let currentTalkList = [];
       this.friendsList.forEach((item) => {
@@ -51,6 +57,9 @@ export default {
   methods: {
     settingClick() {
       this.$router.push("/home/setting");
+    },
+    goHome() {
+      this.$router.push("/");
     },
   },
 };
@@ -76,6 +85,7 @@ export default {
   /* color: var(--theme-color); */
   color: #232a31;
   margin-bottom: 30px;
+  cursor: pointer;
 }
 .logo > img {
   width: 32px;

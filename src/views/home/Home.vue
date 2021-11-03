@@ -1,7 +1,7 @@
 <template>
   <div class="webchat">
     <div class="left">
-      <home-left :userInfo="userInfo" :friendsList="friendsList2"></home-left>
+      <home-left :friendsList="friendsList2"></home-left>
     </div>
     <div class="middle">
       <keep-alive> <router-view :key="$route.path" /></keep-alive>
@@ -48,6 +48,9 @@ export default {
     },
   },
   beforeCreate() {
+    if (!localStorage.getItem("token")) {
+      this.$router.replace("/login");
+    }
     getMyInfo()
       .then((res) => {
         if (res.status === 401) {
@@ -106,7 +109,8 @@ html {
   height: 99%;
 }
 .webchat {
-  /* width: 1024px; */
+  min-width: 1280px;
+  min-height: 660px;
   width: 90%;
   height: 97vh;
   margin: 1vh auto 0;

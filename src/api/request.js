@@ -3,15 +3,14 @@ import axios from "axios";
 export function request(config) {
   //创建axios实例
   const instance = axios.create({
-    baseURL: "/api",
+    baseURL: process.env.VUE_APP_API_URL,
     timeout: 5000,
   });
   //请求拦截器
   instance.interceptors.request.use(
     (config) => {
       if (window.localStorage.getItem("token")) {
-        config.headers.Authorization =
-          "Bearer " + window.localStorage.getItem("token");
+        config.headers.Authorization = "Bearer " + window.localStorage.getItem("token");
       }
       return config;
     },

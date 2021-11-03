@@ -37,19 +37,19 @@
         </div>
         <div class="name">加好友</div>
       </div>
-      <div class="group-chat">
+      <div class="group-chat" @click="otherClick">
         <div class="icon">
           <i class="iconfont">&#xe613;</i>
         </div>
         <div class="name">群聊</div>
       </div>
-      <div class="moment">
+      <div class="moment" @click="otherClick">
         <div class="icon">
           <i class="iconfont">&#xe64f;</i>
         </div>
         <div class="name">好友动态</div>
       </div>
-      <div class="agency">
+      <div class="agency" @click="otherClick">
         <div class="icon">
           <i class="iconfont">&#xe61e;</i>
         </div>
@@ -75,6 +75,9 @@ export default {
   methods: {
     addFriendClick() {
       this.$router.push("/home/addfriend");
+    },
+    otherClick() {
+      this.$message.info("该模块暂未完成..");
     },
   },
 };

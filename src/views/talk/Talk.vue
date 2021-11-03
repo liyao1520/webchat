@@ -11,16 +11,11 @@
         >
           <div class="content">
             {{ item.content }}
-            <span class="time" :class="{ 'time-l': item.type === 1 }"
-              >‎‏‎{{ item.time | formatTime }}</span
-            >
+            <span class="time" :class="{ 'time-l': item.type === 1 }">‎‏‎{{ item.time | formatTime }}</span>
             <i class="isErr el-icon-warning" v-if="item.isErr"></i>
           </div>
           <div class="avatar">
-            <img
-              :src="'http://localhost:4000/file/avatar/' + item.friendId"
-              alt=""
-            />
+            <img :src="baseUrl + '/file/avatar/' + item.friendId" alt="" @error="imgError($event)" />
           </div>
         </div>
       </el-scrollbar>
@@ -28,30 +23,18 @@
     <div class="footer">
       <i class="iconfont link">&#xe623;</i>
       <div class="input-wrap">
-        <el-input
-          v-model="msg"
-          placeholder="请输入内容~"
-          resize="none"
-          class="input"
-          @keyup.native="send"
-        />
+        <el-input v-model="msg" placeholder="请输入内容~" resize="none" class="input" @keyup.native="send" />
         <div class="emoji">&#xe64e;</div>
       </div>
 
-      <button class="send" @click="send">
-        发送 <i class="iconfont">&#xe604;</i>
-      </button>
+      <button class="send" @click="send">发送 <i class="iconfont">&#xe604;</i></button>
     </div>
-    <socket
-      v-if="$store.state.user.id"
-      :friendId="friendId"
-      ref="socket"
-      @sendErr="sendErr"
-    />
+    <socket v-if="$store.state.user.id" :friendId="friendId" ref="socket" @sendErr="sendErr" />
   </div>
 </template>
 
 <script>
+const baseUrl = process.env.VUE_APP_API_URL;
 import Socket from "../socket/Socket.vue";
 import { formatDate } from "@/utils/format";
 export default {
@@ -61,6 +44,7 @@ export default {
       msg: "",
       msgList: [],
       friendId: null,
+      baseUrl,
     };
   },
   methods: {
@@ -88,13 +72,16 @@ export default {
       }
     },
     scrollToBottom() {
-      let el = document
-        .querySelector("#scrollbar")
-        .querySelector(".el-scrollbar__wrap");
+      let el = document.querySelector("#scrollbar").querySelector(".el-scrollbar__wrap");
       el.scrollTop = el.scrollHeight;
     },
     sendErr() {
       this.$set(this.msgList[this.msgList.length - 1], "isErr", true);
+    },
+    imgError(e) {
+      console.log("imgErrorimgError");
+      console.log(e.target.src);
+      e.target.src = baseUrl + "/img/avatar.png";
     },
   },
   beforeMount() {

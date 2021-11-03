@@ -144,7 +144,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .register {
   position: relative;
   width: 100%;

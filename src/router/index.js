@@ -16,6 +16,10 @@ const routes = [
     component: () => import("views/home/Home.vue"),
     children: [
       {
+        path: "/",
+        component: () => import("@/components/Welcome.vue"),
+      },
+      {
         path: "talk/:friendId",
         component: () => import("views/talk/Talk.vue"),
       },
